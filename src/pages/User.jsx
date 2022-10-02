@@ -14,10 +14,8 @@ function User() {
   useEffect(() => {
     dispatch({type: 'SET_LOADING'})
     const getUserData = async() => {
-      const UserData = await getUserAndRepos(params.login)
-      dispatch ({type: 'GET_USER_AND_REPOS', payload: UserData})
-
-
+      const userData = await getUserAndRepos(params.login)
+      dispatch ({type: 'GET_USER_AND_REPOS', payload: userData})
       }
 
     getUserData()
@@ -40,14 +38,15 @@ function User() {
     hireable,
   } = user
 
-
   if (loading) {
     return <Spinner />
   }
 
+  const websiteUrl = blog?.startsWith('http') ? blog : 'https://' + blog
+
   return (
     <>
-      <div className="w-full mx-auto lg:w-10/12">
+      <div className='w-full mx-auto lg:w-10/12'>
         <div className="mb-4">
           <Link to='/' className='btn btn-ghost'>
             Back To Search
@@ -101,8 +100,8 @@ function User() {
               <div className="stat">
                 <div className="stat-title text-md">Website</div>
                 <div className="text-lg stat-value">
-                  <a href={`https://${blog}`} target="_blank" rel='noreferrer'>
-                    {blog}
+                  <a href={websiteUrl} target="_blank" rel='noreferrer'>
+                    {websiteUrl}
                   </a>
                 </div>
               </div>
